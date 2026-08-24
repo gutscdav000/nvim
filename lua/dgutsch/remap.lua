@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+
+-- <leader>pv now opens oil (see after/plugin/oil.lua); oil disables netrw.
 
 vim.keymap.set("n", "<leader>fj", function()
   local input = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")

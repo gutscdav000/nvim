@@ -30,6 +30,10 @@ return require('packer').startup(function(use)
   use('theprimeagen/harpoon')
   use('mbbill/undotree')
   use('tpope/vim-fugitive')
+  use {
+    'stevearc/oil.nvim',
+    requires = { {'nvim-tree/nvim-web-devicons'} }
+  }
 
   use {
     'saghen/blink.cmp',

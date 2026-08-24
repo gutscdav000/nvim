@@ -10,8 +10,10 @@ Leader key is `<Space>` (`vim.g.mapleader = " "`).
 
 | Keymap        | Mode | Action                                          | File                          |
 | ------------- | ---- | ----------------------------------------------- | ----------------------------- |
-| `<leader>pv`  | n    | Open netrw file explorer (`:Ex`)                | `lua/dgutsch/remap.lua`       |
 | `<leader>fj`  | n    | Format the current buffer as JSON via `jq`      | `lua/dgutsch/remap.lua`       |
+| `<leader>pv`  | n    | Oil: open parent directory                      | `after/plugin/oil.lua`        |
+| `-`           | n    | Oil: open parent directory                      | `after/plugin/oil.lua`        |
+| `<leader>pd`  | n    | Oil: open parent directory in a floating window | `after/plugin/oil.lua`        |
 | `<leader>pf`  | n    | Telescope: find files                           | `after/plugin/telescope.lua`  |
 | `<C-p>`       | n    | Telescope: find git-tracked files               | `after/plugin/telescope.lua`  |
 | `<leader>ps`  | n    | Telescope: grep for a prompted string           | `after/plugin/telescope.lua`  |
@@ -23,3 +25,19 @@ Leader key is `<Space>` (`vim.g.mapleader = " "`).
 | `<C-s>`       | n    | Harpoon: jump to marked file 4                  | `after/plugin/harpoon.lua`    |
 | `<leader>gs`  | n    | Fugitive: open Git status                       | `after/plugin/fugative.lua`   |
 | `<leader>u`   | n    | Toggle Undotree                                 | `after/plugin/undotree.lua`   |
+
+### Oil buffer-local overrides
+
+Oil binds `<C-h>`, `<C-t>`, `<C-s>`, and `<C-p>` by default, which would shadow
+Harpoon nav and Telescope git-files inside an oil buffer. Those four are disabled
+and rebound in `after/plugin/oil.lua`:
+
+| Keymap  | Action                        | Replaces oil default |
+| ------- | ----------------------------- | -------------------- |
+| `<C-x>` | Oil: open selection in hsplit | `<C-h>`              |
+| `<C-v>` | Oil: open selection in vsplit | `<C-s>`              |
+| `gt`    | Oil: open selection in a tab  | `<C-t>`              |
+| `gp`    | Oil: preview selection        | `<C-p>`              |
+
+All other oil defaults are unchanged (`<CR>` select, `-` parent, `_` cwd,
+`g.` toggle hidden, `g?` help). `g?` lists the full set.
