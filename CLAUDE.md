@@ -23,8 +23,26 @@ Leader key is `<Space>` (`vim.g.mapleader = " "`).
 | `<C-t>`       | n    | Harpoon: jump to marked file 2                  | `after/plugin/harpoon.lua`    |
 | `<C-n>`       | n    | Harpoon: jump to marked file 3                  | `after/plugin/harpoon.lua`    |
 | `<C-s>`       | n    | Harpoon: jump to marked file 4                  | `after/plugin/harpoon.lua`    |
+| `<leader>e`   | n    | Neo-tree: toggle the sidebar file tree          | `after/plugin/neotree.lua`    |
 | `<leader>gs`  | n    | Fugitive: open Git status                       | `after/plugin/fugative.lua`   |
 | `<leader>u`   | n    | Toggle Undotree                                 | `after/plugin/undotree.lua`   |
+| `<C-space>`   | i    | blink.cmp: show / toggle documentation          | `after/plugin/blink-cmp.lua`  |
+| `<C-e>`       | i    | blink.cmp: hide the completion menu             | `after/plugin/blink-cmp.lua`  |
+| `<C-p>`       | i    | blink.cmp: select previous completion item      | `after/plugin/blink-cmp.lua`  |
+| `<C-n>`       | i    | blink.cmp: select next completion item          | `after/plugin/blink-cmp.lua`  |
+| `<Tab>`       | i    | blink.cmp: `super-tab` preset cycles completion | `after/plugin/blink-cmp.lua`  |
+
+Note: `<C-e>`, `<C-n>`, and `<C-p>` are Harpoon/Telescope in normal mode and
+blink.cmp in insert mode. Different modes, so they do not conflict.
+
+## Two explorers, on purpose
+
+- **oil** (`-`, `<leader>pv`) edits a single directory as a buffer. It cannot
+  display a tree — that is a deliberate non-feature upstream.
+- **neo-tree** (`<leader>e`) is the persistent sidebar with nested hierarchy.
+
+`neotree.lua` sets `hijack_netrw_behavior = "disabled"` so oil keeps ownership of
+directory buffers.
 
 ### Oil buffer-local overrides
 
