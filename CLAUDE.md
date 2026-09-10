@@ -25,6 +25,13 @@ Leader key is `<Space>` (`vim.g.mapleader = " "`).
 | `<C-s>`       | n    | Harpoon: jump to marked file 4                  | `after/plugin/harpoon.lua`    |
 | `<leader>e`   | n    | Neo-tree: toggle the sidebar file tree          | `after/plugin/neotree.lua`    |
 | `<leader>gs`  | n    | Fugitive: open Git status                       | `after/plugin/fugative.lua`   |
+| `<leader>gg`  | n    | Gitu: toggle project Git interface              | `after/plugin/toggleterm.lua` |
+| `<C-\>`       | n    | Toggle shells; in a terminal, hide that terminal | `after/plugin/toggleterm.lua` |
+| `<C-\>`       | t    | Hide the current ToggleTerm terminal            | `after/plugin/toggleterm.lua` |
+| `<C-w>`       | t    | Leave ToggleTerm input and use a window command | `after/plugin/toggleterm.lua` |
+| `<leader>tt`  | n    | Toggle project terminals                        | `after/plugin/toggleterm.lua` |
+| `<leader>tn`  | n    | Create a project terminal                       | `after/plugin/toggleterm.lua` |
+| `<leader>ts`  | n    | Select a shell terminal                         | `after/plugin/toggleterm.lua` |
 | `<leader>u`   | n    | Toggle Undotree                                 | `after/plugin/undotree.lua`   |
 | `<C-space>`   | i    | blink.cmp: show / toggle documentation          | `after/plugin/blink-cmp.lua`  |
 | `<C-e>`       | i    | blink.cmp: hide the completion menu             | `after/plugin/blink-cmp.lua`  |

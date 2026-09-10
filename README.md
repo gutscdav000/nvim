@@ -1,5 +1,8 @@
 # Neovim LSP Setup Guide
 
+For shells, Gitu, and moving from tmux to Herdr, see the
+[terminal workflow guide](docs/terminal-workflow.md).
+
 This guide explains how Neovim's built-in LSP client works and how to set up
 language servers for TypeScript, JavaScript, Python, Rust, and Scala.
 
