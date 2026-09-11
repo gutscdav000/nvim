@@ -1,118 +1,169 @@
 # Terminal and Git workflow
 
-Use Herdr for project workspaces and processes that should survive detaching.
-Run Neovim in a Herdr pane. Use ToggleTerm inside Neovim for quick shells and
-Gitu, and run long-lived agents or servers in separate Herdr panes.
+Use this stack for local development:
 
-## Installation
+```text
+Ghostty → Herdr → Neovim → ToggleTerm/Gitu
+                   └────── separate Herdr panes for agents and servers
+```
 
-On macOS:
+Herdr owns persistent workspaces and long-running processes. ToggleTerm provides
+quick shells inside Neovim. Gitu provides a Git dashboard. Neo-tree shows the
+project hierarchy, while Oil edits the contents of one directory.
+
+## Installation status
+
+This Mac already has Herdr, Gitu, ToggleTerm, Neo-tree, Oil, Fugitive, and
+Harpoon installed. Nothing else is required. On another Mac, run:
 
 ```sh
 brew install herdr gitu
+nvim
 ```
 
-In Neovim, run `:PackerInstall`, then restart Neovim. ToggleTerm is pinned to
-v2.13.1. Neo-tree, Oil, Fugitive, and Harpoon remain available.
+Then run `:PackerInstall` inside Neovim and restart it. ToggleTerm is pinned to
+v2.13.1 in this configuration.
 
-## Neovim keys
+## Start outside tmux
 
-Leader is Space. These shortcuts are used in normal mode unless stated otherwise.
+Keep existing tmux sessions alive while learning Herdr. Open a new Ghostty window
+or tab and confirm it is outside tmux:
 
-| Key | Action |
-| --- | --- |
-| `Ctrl-\` | In the editor: toggle shells. In a ToggleTerm terminal: hide that terminal, including from terminal input mode. |
-| `Space tt` | Toggle shells; restores the previous shell layout when available. |
-| `Space tn` | Create another shell. |
-| `Space ts` | Select a shell using Neovim's built-in numbered picker. |
-| `Ctrl-w`, then `h/j/k/l` | Leave terminal input and move to an adjacent Neovim window. |
-| `Ctrl-w`, then `N` | Leave terminal input and remain in the terminal buffer to search/copy with normal Vim motions. |
-| `i` | Resume typing into a terminal from normal mode. |
-| `Space gg` | Open/hide Gitu for the current repository. |
-| `Space gs` | Open Fugitive's Git status. |
-| `Space e` | Toggle Neo-tree. |
-| `-` | Open the parent directory in Oil. |
+```sh
+echo "$TMUX"
+```
 
-Shells open in a 14-line bottom split. New shells start at the current file's
-Git root, including a linked worktree's root, or at Neovim's working directory
-when there is no Git root. When invoked from an existing ToggleTerm buffer,
-its original terminal directory is used for root detection. Existing shells keep
-their process, history, environment, and any `cd` you perform; switching files
-does not silently move them. `:ToggleTermSetName` can name a shell for the picker.
-
-Escape is passed through to terminal applications. Terminal-local `Ctrl-w` is
-reserved for Neovim window navigation rather than the shell's delete-word command.
-Harpoon's normal-mode `Ctrl-h/t/n/s` bindings are unchanged.
-
-Gitu opens in a large float. Existing shell windows are hidden first because
-ToggleTerm does not support simultaneous mixed terminal directions. The shells
-keep running; use `Space tt` or `Space ts` to bring them back after hiding Gitu.
-Each repository/worktree has its own Gitu instance, excluded from the shell picker.
-Press `h` in Gitu for help. `Ctrl-\` hides it without exiting. Quitting Gitu and
-reopening it starts a fresh instance.
-
-Gitu's `EDITOR`, `VISUAL`, and `GIT_EDITOR` are set to `nvim` only for its process.
-Commit messages and file edits therefore open a nested Neovim inside its terminal;
-save and quit that editor to return to Gitu. The outer terminal's `Ctrl-\` and
-`Ctrl-w` shortcuts still apply. Use Fugitive if you prefer editing commit messages
-in your existing Neovim instance. Unsaved editor changes are not visible to Git.
-
-## Try it
-
-1. Open a file in a Git project. Press `Space tt`, run `pwd`, and check the root.
-2. Run `export TERMINAL_DEMO=hello`, hide with `Ctrl-\`, reopen with `Space tt`,
-   and run `echo "$TERMINAL_DEMO"`. It should still say `hello`.
-3. Return to normal mode with `Ctrl-w N`. Create another shell with `Space tn`.
-   Hide it. If focus returns to another shell, press `Ctrl-w N` again, then
-   choose between the two shells with `Space ts`.
-4. In the editor, press `Space gg`. Browse changes and press `h` for Gitu help.
-   Hide it with `Ctrl-\`, then compare `Space gs` for Fugitive.
-5. Use `Space e` and `-` to verify your usual explorers, and try Harpoon's keys.
-
-ToggleTerm jobs live inside this Neovim process. Hiding preserves them; quitting
-Neovim ends them. Saving an editor session does not preserve live shell jobs.
-
-## Moving from tmux to Herdr
-
-Start in a terminal window outside tmux:
+It should print an empty line. Start Herdr from a project:
 
 ```sh
 cd /path/to/project
 herdr
 ```
 
-Run `nvim` in a pane, then create other panes for agents, servers, or a standalone
-`gitu`. Keep one Herdr workspace per project. Herdr's defaults already fit this
-setup, so no custom Herdr config or Neovim navigation plugin is required.
+Do not normally run Herdr inside tmux; both would own panes and use `Ctrl-b`.
 
-The prefix is `Ctrl-b`, then release and press the next key:
+Herdr commands use `Ctrl-b` as a prefix: press it, release it, then press the
+action key.
 
-| Action | Herdr default |
+| Command | Action |
 | --- | --- |
-| Split right / down | `v` / `-` |
-| Move across Herdr panes | `h/j/k/l` |
-| New tab | `c` |
-| Next / previous tab | `n` / `p` |
-| Workspace picker | `w` |
-| Zoom pane | `z` |
-| Copy mode | `[` |
-| Detach | `q` (different from tmux's usual `d`) |
-| Help | `?` |
+| `Ctrl-b ?` | Show all Herdr shortcuts. |
+| `Ctrl-b v` / `Ctrl-b -` | Split right / down. |
+| `Ctrl-b h/j/k/l` | Move between panes. |
+| `Ctrl-b z` | Zoom or restore a pane. |
+| `Ctrl-b c` | Create a tab. |
+| `Ctrl-b n` / `Ctrl-b p` | Next / previous tab. |
+| `Ctrl-b w` | Open the workspace picker. |
+| `Ctrl-b [` | Enter copy mode. |
+| `Ctrl-b q` | Detach. This differs from tmux's `Ctrl-b d`. |
 
-Run `herdr` again to reattach. Existing shell/agent processes remain alive while
-the Herdr server stays running. A server or machine restart can restore layouts
-and supported agent sessions, but cannot resurrect the original live processes.
+Run `herdr` again to reattach. Start Neovim in one pane:
 
-Herdr gives you familiar tabs, splits, detaching, and copy mode, plus project and
-agent status UI. It is not a drop-in implementation of tmux: your `.tmux.conf`,
-tmux plugins, scripts that call `tmux`, and editor/tmux navigation integrations do
-not transfer. Remote access also needs a suitable Herdr installation on the remote
-host; keeping tmux for machines where it is already available is reasonable.
+```sh
+nvim .
+```
 
-For new local work, use terminal emulator → Herdr → Neovim → ToggleTerm. You do
-not need tmux in that chain. Existing tmux sessions cannot be imported as live
-Herdr processes: finish or stop work deliberately and relaunch it in Herdr. Keep
-tmux installed during the transition and use either tool for a given workspace.
+Create another Herdr pane with `Ctrl-b v` for anything that should survive
+quitting Neovim, such as:
+
+```sh
+codex
+npm run dev
+cargo watch
+pytest --watch
+```
+
+## Use ToggleTerm in Neovim
+
+The Neovim leader key is Space.
+
+| Command | Action |
+| --- | --- |
+| `Space tt` or `Ctrl-\` | Toggle the project shells. |
+| `Space tn` | Create another shell. |
+| `Space ts` | Select an existing shell. |
+| `:ToggleTermSetName` | Name the current shell for the selector. |
+| `Ctrl-\` in a terminal | Hide that terminal. |
+| `Ctrl-w h/j/k/l` | Leave terminal input and move between Neovim windows. |
+| `Ctrl-w N` | Enter terminal-normal mode for Vim navigation and copying. |
+| `i` | Resume terminal input from terminal-normal mode. |
+
+New shells open in a 14-line bottom split at the current file's Git root, or at
+Neovim's working directory outside Git. Hiding a terminal preserves its process,
+history, environment, and any `cd`. Quitting Neovim ends its ToggleTerm jobs.
+
+Verify persistence:
+
+```sh
+pwd
+export TERMINAL_DEMO=hello
+```
+
+Hide with `Ctrl-\`, reopen with `Space tt`, then run:
+
+```sh
+echo "$TERMINAL_DEMO"
+```
+
+It should print `hello`.
+
+## Use Gitu and Fugitive
+
+Press `Space gg` from a normal Neovim buffer to open or hide Gitu for the current
+repository. Press `h` inside Gitu for context-sensitive help.
+
+| Gitu key | Action |
+| --- | --- |
+| `j` / `k` | Move down / up. |
+| `Tab` | Expand or collapse a section. |
+| `b` | Branch menu. |
+| `c` | Commit menu. |
+| `l` | Log menu. |
+| `f` / `F` | Fetch / pull. |
+| `P` | Push. |
+| `r` | Rebase menu. |
+| `z` | Stash menu. |
+| `q` or `Esc` | Quit or close the current screen. |
+| `Ctrl-\` | Hide Gitu without ending it. |
+
+Gitu supports staging files, hunks, and lines; use `h` because the available
+keys depend on the selected section. A commit opens a nested Neovim. Enter the
+message and run `:wq` to save it and return to Gitu.
+
+Opening Gitu hides visible bottom terminals, but their processes keep running.
+Hide Gitu and use `Space tt` or `Space ts` to restore them. Quitting Gitu with
+`q` ends it; the next `Space gg` starts a new process.
+
+Press `Space gs` to use Fugitive instead. Gitu is a dedicated Git dashboard;
+Fugitive keeps Git operations in your main Neovim instance. Both remain installed.
+
+## Use Neo-tree and Oil
+
+| Command | Action |
+| --- | --- |
+| `Space e` | Toggle the Neo-tree project sidebar. |
+| `Enter` in Neo-tree | Open a file or expand a directory. |
+| `?` in Neo-tree | Show Neo-tree help. |
+| `-` | Open the current file's parent directory in Oil. |
+| `:w` in Oil | Apply the file operations edited in the Oil buffer. |
+
+Use Neo-tree to understand the project hierarchy. Use Oil to create, rename,
+move, or delete files by editing a directory like a normal buffer.
+
+## Move from tmux gradually
+
+1. Leave existing tmux sessions running.
+2. Start new local projects in Herdr from a terminal outside tmux.
+3. Relaunch old work in Herdr when convenient; live tmux processes cannot migrate.
+4. Close old tmux sessions normally after their work is finished.
+
+Herdr preserves processes while its server runs. After a machine restart it can
+restore layouts and supported agent sessions, but not the original operating-system
+processes. Your `.tmux.conf`, tmux plugins, and scripts that call `tmux` do not
+transfer. Keep tmux installed for remote machines where it remains useful.
+
+For local work you only need Ghostty, Herdr, and Neovim. Put quick commands in
+ToggleTerm and long-running agents, servers, and watchers in separate Herdr panes.
 
 ## References
 
