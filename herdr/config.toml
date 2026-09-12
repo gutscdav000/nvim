@@ -1,0 +1,13 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+[[keys.command]]
+key = "prefix+shift+r"
+type = "popup"
+command = "$HOME/.config/nvim/herdr/bin/herdr-rename-agent"
+description = "rename focused agent"
+width = "50%"
+height = "20%"
