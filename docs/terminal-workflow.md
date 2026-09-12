@@ -165,6 +165,24 @@ transfer. Keep tmux installed for remote machines where it remains useful.
 For local work you only need Ghostty, Herdr, and Neovim. Put quick commands in
 ToggleTerm and long-running agents, servers, and watchers in separate Herdr panes.
 
+## Track Herdr configuration
+
+This repository also tracks the Herdr configuration because Herdr is the outer
+terminal workspace for the Neovim workflow. The tracked files are under
+`herdr/`; the live Herdr config is linked from `~/.config/herdr/config.toml`.
+
+Install or refresh the link with:
+
+```sh
+mkdir -p "$HOME/.config/herdr"
+ln -sfn "$HOME/.config/nvim/herdr/config.toml" "$HOME/.config/herdr/config.toml"
+herdr server reload-config
+```
+
+The `Ctrl-b`, `Shift-r` binding opens a popup that renames the agent in the
+focused pane. Herdr supplies `HERDR_ACTIVE_PANE_ID` to the tracked helper,
+which calls `herdr agent rename` for that pane.
+
 ## References
 
 - [ToggleTerm](https://github.com/akinsho/toggleterm.nvim)

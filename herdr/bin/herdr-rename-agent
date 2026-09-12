@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -eu
+
+pane_id=${HERDR_ACTIVE_PANE_ID:-}
+
+if [ -z "$pane_id" ]; then
+  printf '%s\n' 'No active Herdr pane was supplied.' >&2
+  printf 'Press Enter to close. '
+  read -r _ || true
+  exit 1
+fi
+
+printf 'New agent name: '
+if ! IFS= read -r name; then
+  printf '\nInput closed unexpectedly. Press Enter to close. '
+  read -r _ || true
+  exit 1
+fi
+
+if [ -z "$name" ]; then
+  exit 0
+fi
+
+if ! output=$(herdr agent rename "$pane_id" "$name" 2>&1); then
+  printf '%s\n' "$output"
+  printf '\nRename failed. Press Enter to close. '
+  read -r _ || true
+  exit 1
+fi
+
+printf 'Renamed agent to %s. Press Enter to close.\n' "$name"
+read -r _ || true
