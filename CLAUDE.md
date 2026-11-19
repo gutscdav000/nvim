@@ -33,6 +33,10 @@ Leader key is `<Space>` (`vim.g.mapleader = " "`).
 | `<leader>tn`  | n    | Create a project terminal                       | `after/plugin/toggleterm.lua` |
 | `<leader>ts`  | n    | Select a shell terminal                         | `after/plugin/toggleterm.lua` |
 | `<leader>u`   | n    | Toggle Undotree                                 | `after/plugin/undotree.lua`   |
+| `ys`          | n    | nvim-surround: surround with motion (e.g. `ysiw)`) | `after/plugin/nvim-surround.lua` |
+| `cs`          | n    | nvim-surround: change surrounding (e.g. `cs"'`) | `after/plugin/nvim-surround.lua` |
+| `ds`          | n    | nvim-surround: delete surrounding (e.g. `ds(`)  | `after/plugin/nvim-surround.lua` |
+| `S`           | v    | nvim-surround: surround visual selection        | `after/plugin/nvim-surround.lua` |
 | `<C-space>`   | i    | blink.cmp: show / toggle documentation          | `after/plugin/blink-cmp.lua`  |
 | `<C-e>`       | i    | blink.cmp: hide the completion menu             | `after/plugin/blink-cmp.lua`  |
 | `<C-p>`       | i    | blink.cmp: select previous completion item      | `after/plugin/blink-cmp.lua`  |

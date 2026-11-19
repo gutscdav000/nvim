@@ -30,6 +30,8 @@ return require('packer').startup(function(use)
   use('theprimeagen/harpoon')
   use('mbbill/undotree')
   use('tpope/vim-fugitive')
+  use('kylechui/nvim-surround')
+
   use { 'akinsho/toggleterm.nvim', tag = 'v2.13.1' }
   use {
     'stevearc/oil.nvim',
